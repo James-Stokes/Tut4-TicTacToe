@@ -7,7 +7,7 @@ class TicTacToe
 {
 private:
 	char moves[9];
-	bool player2Turn; //keeps track of who's turn it is
+	bool player1Turn; //keeps track of who's turn it is
 	int turn; //keeps track of what turn it is
 
 public:
@@ -26,11 +26,14 @@ int main() {
 
 	while (true) {
 		game.print();
-		cout << "enter collumn" << endl;
+		cout << "\n ENTER COLLOMN:" << endl;
 		cin >> col;
-		cout << "enter row" << endl;
+		cout << "\n ENTER ROW:" << endl;
 		cin >> row;
 		game.move(col, row);
+		if (game.over()) {
+			game.reset();
+		}
 	}
 	return 0;
 }

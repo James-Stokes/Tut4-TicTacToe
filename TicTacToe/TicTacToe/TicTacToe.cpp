@@ -5,34 +5,31 @@ TicTacToe::TicTacToe()
 	for (int i = 0; i < 9; i++) {
 		moves[i] = '-';
 	}
+	turn = 1;
+	player1Turn = true;
 }
 
 void TicTacToe::reset()
 {
-	cout << "\n\n\n\n\n\n\n\n\n" << endl;
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe game is over! play again:" << endl;
 	for (int i = 0; i < 9; i++) {
 		moves[i] = '-';
 	}
-	print();
 }
 
 void TicTacToe::print()
 {
-	if (!over()) {
 		cout << "turn: " << turn << "\n------------" << endl;
-		cout << "1	2  3\n" <<
-			"A" << moves[0] << moves[1] << moves[2] <<
-			"B" << moves[3] << moves[4] << moves[5] <<
-			"C" << moves[6] << moves[7] << moves[8] << 
-			"\n------------" << endl;
-		
-		if (!player2Turn)
-			cout << "player 1's turn:" << endl;
-		else 
+		cout << "  1  2  3\n" <<
+			"A " << moves[0] << "  " << moves[1] << "  " << moves[2] << "\n" <<
+			"B " << moves[3] << "  " << moves[4] << "  " << moves[5] << "\n" <<
+			"C " << moves[6] << "  " << moves[7] << "  " << moves[8] << "\n" <<
+			"------------" << endl;
+
+		if (!player1Turn)
 			cout << "player 2's turn:" << endl;
-	}
-	else
-		cout << "the game is over!";
+		else
+			cout << "player 1's turn:" << endl;
 }
 
 bool TicTacToe::over()
@@ -48,28 +45,31 @@ bool TicTacToe::over()
 		}
 	*/
 
-	if (moves[0] == moves[1] && moves[1] == moves[2]) {
+	if (turn > 9) 
+		return true;
+
+	if (moves[0] == moves[1] && moves[1] == moves[2] && moves[0] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[0] == moves[3] && moves[3] == moves[6]) {
+	if (moves[0] == moves[3] && moves[3] == moves[6] && moves[0] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[3] == moves[4] && moves[4] == moves[5]) {
+	if (moves[3] == moves[4] && moves[4] == moves[5] && moves[3] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[1] == moves[4] && moves[4] == moves[7]) {
+	if (moves[1] == moves[4] && moves[4] == moves[7] && moves[1] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[6] == moves[7] && moves[7] == moves[8]) {
+	if (moves[6] == moves[7] && moves[7] == moves[8] && moves[6] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[2] == moves[5] && moves[5] == moves[8]) {
+	if (moves[2] == moves[5] && moves[5] == moves[8] && moves[2] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[0] == moves[4] && moves[4] == moves[5]) {
+	if (moves[0] == moves[4] && moves[4] == moves[5] && moves[0] != '-') {
 		return true; //if the game is won
 	}
-	if (moves[2] == moves[4] && moves[4] == moves[6]) {
+	if (moves[2] == moves[4] && moves[4] == moves[6] && moves[2] != '-') {
 		return true; //if the game is won
 	}
 
@@ -79,13 +79,14 @@ bool TicTacToe::over()
 int TicTacToe::move(int col, char row)
 {
 	if (col > 0 && col < 4) {
-		if (!player2Turn) {
+		if (!player1Turn) {
 				switch (row) {
 				case 'A':
 					if (moves[col - 1] == '-')
 					{
 						moves[col - 1] = 'O';
 						turn++;
+						player1Turn = true;
 					}
 					else {
 						return 1;
@@ -95,6 +96,7 @@ int TicTacToe::move(int col, char row)
 					if (moves[col + 2] == '-') {
 						moves[col + 2] = 'O';
 						turn++;
+						player1Turn = true;
 					}
 					else {
 						return 1;
@@ -104,6 +106,7 @@ int TicTacToe::move(int col, char row)
 					if (moves[col + 5] == '-') {
 						moves[col + 5] = 'O';
 						turn++;
+						player1Turn = true;
 					}
 					else {
 						return 1;
@@ -114,12 +117,13 @@ int TicTacToe::move(int col, char row)
 					break;
 				}
 			}
-			else if (player2Turn) {
+			else if (player1Turn) {
 				switch (row) {
 				case 'A':
 					if (moves[col - 1] == '-') {
 						moves[col - 1] = 'X';
 						turn++;
+						player1Turn = false;
 					}
 					else {
 						return 1;
@@ -129,6 +133,7 @@ int TicTacToe::move(int col, char row)
 					if (moves[col + 2] == '-') {
 						moves[col + 2] = 'X';
 						turn++;
+						player1Turn = false;
 					}
 					else {
 						return 1;
@@ -138,6 +143,7 @@ int TicTacToe::move(int col, char row)
 					if (moves[col + 5] == '-') {
 						moves[col + 5] = 'X';
 						turn++;
+						player1Turn = false;
 					}
 					else {
 						return 1;
